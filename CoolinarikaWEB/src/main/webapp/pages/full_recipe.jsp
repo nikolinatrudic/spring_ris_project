@@ -27,7 +27,7 @@
 						</section>
 					</div>
 					<div class = "col">
-					
+						<p>ALOOOOOOOOOOO</p>
 					</div>
 				</div>
 
