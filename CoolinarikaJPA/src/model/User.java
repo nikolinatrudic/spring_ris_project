@@ -56,7 +56,7 @@ public class User implements Serializable {
 	private List<IsFriend> isFriends1;
 
 	//bi-directional many-to-one association to IsFriend
-	@OneToMany(mappedBy="user2")
+	@OneToMany(mappedBy="user2", fetch = FetchType.EAGER)
 	private List<IsFriend> isFriends2;
 
 	public User() {
@@ -231,7 +231,7 @@ public class User implements Serializable {
 
 	public IsFriend removeIsFriends1(IsFriend isFriends1) {
 		getIsFriends1().remove(isFriends1);
-		isFriends1.setUser1(null);
+		//isFriends1.setUser1(null);
 
 		return isFriends1;
 	}
@@ -253,7 +253,7 @@ public class User implements Serializable {
 
 	public IsFriend removeIsFriends2(IsFriend isFriends2) {
 		getIsFriends2().remove(isFriends2);
-		isFriends2.setUser2(null);
+		//isFriends2.setUser2(null);
 
 		return isFriends2;
 	}
