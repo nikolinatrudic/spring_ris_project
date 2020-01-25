@@ -123,7 +123,7 @@
 									</form>
 								</c:if>
 							</s:authorize>
-							<br> <br> 
+							<br> <br>  
 							<p align="justify" style="padding: 15px">${lookRecipe.description }</p>
 							<br>
 							<div class="w3-content w3-display-container"
