@@ -10,4 +10,5 @@ import model.User;
 public interface FavouriteCategoryRepository extends JpaRepository<Favourite_category, Integer> {
 	
 	List<Favourite_category> findByUser(User user);
+	
 }

@@ -22,13 +22,13 @@
 		<div class="mask rgba-black-light align-items-center">
 			<!-- Content -->
 			<div class="container"
-				style="width: 1200px; height 800px; margin-top: 150px;">
+				style="width: 1400px; height 800px; margin-top: 150px;">
 				<div class="row">
 					<div class="col">
 						<div class="row">
 							<section
 								class="card profile-card mb-4 text-center table-wrapper-scroll-y my-custom-scrollbar"
-								style="width: 300px; height: 300px">
+								style="width: 300px; height: 300px;">
 								<c:if test="${! empty ingRecipes }">
 									<table class="table">
 										<thead>
@@ -54,7 +54,7 @@
 						</div>
 						<div class="row">
 							<section class="card profile-card mb-4 text-center"
-								style="width: 300px; height: 450px;">
+								style="width: 300px; height: 420px;">
 								<s:authorize access="!isAuthenticated()">
 									<h2>${userInfo }</h2>
 									<br>
@@ -102,15 +102,32 @@
 							</section>
 						</div>
 					</div>
-					<div class="row">
-						<section class="card profile-card mb-4 text-center"
+					<div class="col">
+						<section
+							class="card profile-card mb-4 text-center table-wrapper-scroll-y my-custom-scrollbar"
 							style="width: 800px; height: 750px; margin-left: -20px">
-							<h2 style="margin-top: 30px">${lookRecipe.name }</h2>
+							<h1 style="margin-top: 30px">${lookRecipe.name }</h1>
 							<h4 style="margin-top: 10px">${lookRecipe.postDate }</h4>
-							<br> <br> <br>
-							<p>${lookRecipe.description }</p>
 							<br>
-							<div class="w3-content w3-display-container" style="width: 100%; height: 40%">
+							<s:authorize access="isAuthenticated()">
+								<c:if test="${! empty favc }">
+									<form action="/Coolinarika/users/addToFavouriteCategory" method="post">
+										<select name="favcat" class="browser-default custom-select"
+											style="width: 300px">
+											<c:forEach items="${favc }" var="fc">
+												<option value="${fc.idFavourite_category }">${fc.name }</option>
+											</c:forEach>
+										</select>
+										<br>
+										<input type = "submit" value="ADD TO FAVOURITES" class="btn btn-brown">
+									</form>
+								</c:if>
+							</s:authorize>
+							<br> <br> 
+							<p align="justify" style="padding: 15px">${lookRecipe.description }</p>
+							<br>
+							<div class="w3-content w3-display-container"
+								style="width: 100%; height: 40%">
 								<c:forEach items="${picRecipes }" var="pc">
 									<img class="mySlides" src="${pc.path }" style="width: 100%">
 								</c:forEach>
@@ -123,8 +140,10 @@
 						</section>
 					</div>
 				</div>
-
-
+				<%-- 			<c:remove var="lookRecipe"/> --%>
+				<%-- 			<c:remove var="ingRecipe"/> --%>
+				<%-- 			<c:remove var="picRecipe"/> --%>
+				<%-- 			<c:remove var="picRecipe"/> --%>
 			</div>
 			<!-- Content -->
 		</div>

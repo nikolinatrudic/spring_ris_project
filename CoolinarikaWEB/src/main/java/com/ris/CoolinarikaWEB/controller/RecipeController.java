@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ris.CoolinarikaWEB.repository.CategoryRepository;
 import com.ris.CoolinarikaWEB.repository.ContainRepository;
+import com.ris.CoolinarikaWEB.repository.FavouriteCategoryRepository;
 import com.ris.CoolinarikaWEB.repository.FriendRepository;
 import com.ris.CoolinarikaWEB.repository.IngredientRepository;
 import com.ris.CoolinarikaWEB.repository.PictureRepository;
@@ -21,6 +22,7 @@ import com.ris.CoolinarikaWEB.repository.UserRepository;
 
 import model.Category;
 import model.Contain;
+import model.Favourite_category;
 import model.Ingredient;
 import model.IsFriend;
 import model.Picture;
@@ -49,6 +51,9 @@ public class RecipeController {
 	
 	@Autowired
 	FriendRepository fr;
+	
+	@Autowired
+	FavouriteCategoryRepository fcr;
 	
 //	@RequestMapping(value = "searchAll", method = RequestMethod.GET)
 //	public String searhAll(HttpServletRequest request) {
@@ -87,7 +92,9 @@ public class RecipeController {
 		if(p == null) {// neregistrovani korisnik moze da vidi samo ime i prezime onog ko je postavio recept
 			request.getSession().setAttribute("userInfo", r.getUser().getName() + " " + r.getUser().getSurname());
 		} else {
+			List<Favourite_category> favc = fcr.findByUser(ur.findByUsername(p.getName()));
 			request.getSession().setAttribute("recipeOwner", r.getUser());
+			request.getSession().setAttribute("favc", favc);
 			IsFriend isf = fr.getMemberStatus(p.getName(), r.getUser().getUsername());
 			String status = "";
 			if(isf != null) {
@@ -138,5 +145,22 @@ public class RecipeController {
 		rr.saveAndFlush(r);
 		request.getSession().setAttribute("pic", savedPicture);
 		return "adding_attributes";
+	}
+	
+	@RequestMapping(value = "/users/addToFavouriteCategory", method = RequestMethod.POST)
+	public String addToFavouriteCategory(Principal p, Integer favcat, HttpServletRequest request) {
+		Recipe r = (Recipe) request.getSession().getAttribute("lookRecipe");
+		System.out.println("recept" + r.getName());
+		Favourite_category fc = fcr.findById(favcat).get();
+		System.out.println("omiljena kat " + fc.getName());
+		r.getFavouriteCategories().add(fc);
+		System.out.println("dodao u listu recepata");
+		fc.getRecipes().add(r);
+		System.out.println("dodau u listu omilj kat");
+		rr.saveAndFlush(r);
+		fcr.saveAndFlush(fc);
+		List<Favourite_category> favc = fcr.findByUser(ur.findByUsername(p.getName()));
+		request.getSession().setAttribute("favc", favc);
+		return "full_recipe";
 	}
 }
