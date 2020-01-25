@@ -30,7 +30,7 @@
 </head>
 <nav
 	class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
-	<a class="navbar-brand" href="#"><strong>Coolinarika</strong></a>
+	<a class="navbar-brand" href="/Coolinarika/pages/index.jsp"><strong>Coolinarika</strong></a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navbarSupportedContent"
 		aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -51,15 +51,17 @@
 				<li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/users/redirectAddRecipe">ADD
 						RECIPE <span class="sr-only">(current)</span>
 				</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">RECIPES</a></li>
 				<s:authorize access="hasRole('ADMIN')">
 					<li class="nav-item"><a class="nav-link"
 						href="${pageContext.request.contextPath}/pages/new_category.jsp">ADD
 							NEW CATEGORY</a></li>
 				</s:authorize>
-				<li class="nav-item"><a class="nav-link"
-					href="${pageContext.request.contextPath}/logout">SIGN OUT</a></li>
-			</s:authorize>
+				<li class="nav-item"><a class="nav-link" href="/Coolinarika/searchAll">RECIPES</a></li>
+				<s:authorize access="isAuthenticated()">
+					</s:authorize>
+					<li class="nav-item"><a class="nav-link"
+						href="${pageContext.request.contextPath}/logout">SIGN OUT</a></li>
+				</s:authorize>
 		</ul>
 		<form class="form-inline">
 			<div class="md-form my-0">

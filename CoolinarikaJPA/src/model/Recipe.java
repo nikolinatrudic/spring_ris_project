@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -93,6 +95,8 @@ public class Recipe implements Serializable {
 	}
 
 	public List<Picture> getPictures() {
+		if(pictures == null)
+			pictures = new ArrayList<Picture>();
 		return this.pictures;
 	}
 

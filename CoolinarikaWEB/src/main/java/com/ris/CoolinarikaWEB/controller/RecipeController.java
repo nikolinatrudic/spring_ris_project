@@ -80,7 +80,7 @@ public class RecipeController {
 	public String getRecipeInfo(Principal p, Integer forRecipe, HttpServletRequest request) {
 		Recipe r = rr.findById(forRecipe).get();
 		List<Contain> ingRecipes = cr.findByRecipe(r);
-		request.getSession().setAttribute("lookRecipe", ingRecipes);
+		request.getSession().setAttribute("lookRecipe", r);
 		request.getSession().setAttribute("ingRecipes", ingRecipes);
 		List<Picture> pictures = pr.searchByRecipe(forRecipe);
 		request.getSession().setAttribute("picRecipes", pictures);
@@ -135,7 +135,7 @@ public class RecipeController {
 		pic.setPath(picture);
 		Picture savedPicture = pr.save(pic);
 		r.addPicture(savedPicture);
-		rr.flush();
+		rr.saveAndFlush(r);
 		request.getSession().setAttribute("pic", savedPicture);
 		return "adding_attributes";
 	}
