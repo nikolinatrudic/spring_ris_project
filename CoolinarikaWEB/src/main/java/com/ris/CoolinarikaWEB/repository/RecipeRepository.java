@@ -15,4 +15,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, Integer> {
 	int getNumberOfRecipes(@Param("username") String username);
 	
 	List<Recipe> findByCategory(Category category);
+	
+	@Query("select r from Recipe r where r.category.idCategory=:cat and r.user.username <> :username")
+	List<Recipe> notMyRecipes(@Param("username") String username, @Param("cat") Integer cat);
 }

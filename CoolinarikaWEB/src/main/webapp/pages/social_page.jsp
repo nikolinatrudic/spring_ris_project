@@ -43,10 +43,12 @@
 											<input type="hidden" name="id" value="${f.idUser }" />
 											<input type = "submit" value="SEND" class="btn btn-outline-default waves-effect">
 											</form></td>
-											<td style="padding: 0; margin: 0"><form action="#" method = "post">
-											<input type="hidden" name="id" value="${f.idUser }" />
-											<input type = "submit" value="DELETE" class="btn btn-outline-default waves-effect">
-											</form></td>
+											<td style="padding: 0; margin: 0">
+												<form action="/Coolinarika/users/deleteFriend" method = "post">
+													<input type="hidden" name="id" value="${f.idUser }" />
+													<input type = "submit" value="DELETE" class="btn btn-outline-default waves-effect">
+												</form>
+											</td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -78,7 +80,7 @@
 										<input type="hidden" name="id" value="${r.idUser }" />
 										<input type = "submit" value="ACCEPT" class="btn btn-outline-default waves-effect">
 										</form></td>
-										<td style="padding: 0; margin: 0"><form action="#" method = "post">
+										<td style="padding: 0; margin: 0"><form action="/Coolinarika/users/deleteFriendRequest" method = "post">
 										<input type="hidden" name="id" value="${r.idUser }" />
 										<input type = "submit" value="DELETE" class="btn btn-outline-default waves-effect">
 										</form></td>

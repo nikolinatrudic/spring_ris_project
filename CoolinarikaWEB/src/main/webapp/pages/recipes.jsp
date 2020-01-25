@@ -93,6 +93,7 @@
 										</tbody>
 									</table>
 								</div>
+								<c:remove var="categoryRecipes"/>
 							</c:if>
 							</div>
 						</div>

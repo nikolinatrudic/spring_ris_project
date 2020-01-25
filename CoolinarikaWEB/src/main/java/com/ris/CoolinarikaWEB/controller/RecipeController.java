@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ris.CoolinarikaWEB.repository.CategoryRepository;
 import com.ris.CoolinarikaWEB.repository.ContainRepository;
+import com.ris.CoolinarikaWEB.repository.FriendRepository;
 import com.ris.CoolinarikaWEB.repository.IngredientRepository;
 import com.ris.CoolinarikaWEB.repository.PictureRepository;
 import com.ris.CoolinarikaWEB.repository.RecipeRepository;
@@ -21,6 +22,7 @@ import com.ris.CoolinarikaWEB.repository.UserRepository;
 import model.Category;
 import model.Contain;
 import model.Ingredient;
+import model.IsFriend;
 import model.Picture;
 import model.Recipe;
 
@@ -45,6 +47,9 @@ public class RecipeController {
 	@Autowired
 	PictureRepository pr;
 	
+	@Autowired
+	FriendRepository fr;
+	
 //	@RequestMapping(value = "searchAll", method = RequestMethod.GET)
 //	public String searhAll(HttpServletRequest request) {
 //		List<Recipe> recipes = rr.findAll();
@@ -60,18 +65,37 @@ public class RecipeController {
 	}
 	
 	@RequestMapping(value = "seeRecipes", method = RequestMethod.GET)
-	public String seeRecipes(Integer selectedCategory, HttpServletRequest request) {
-		List<Recipe> recipes = rr.findByCategory(ctr.findById(selectedCategory).get());
+	public String seeRecipes(Principal p, Integer selectedCategory, HttpServletRequest request) {
+		List<Recipe> recipes;
+		if(p == null) {
+			recipes = rr.findByCategory(ctr.findById(selectedCategory).get());
+		} else { // svi recepti bez mojih
+			recipes = rr.notMyRecipes(p.getName(), selectedCategory);
+		}
 		request.getSession().setAttribute("categoryRecipes", recipes);
 		return "recipes";
 	}
 	
 	@RequestMapping(value = "getRecipeInfo", method = RequestMethod.GET)
-	public String getRecipeInfo(Integer forRecipe, HttpServletRequest request) {
-		List<Ingredient> ingRecipes = ir.searchByRecipe(forRecipe);
+	public String getRecipeInfo(Principal p, Integer forRecipe, HttpServletRequest request) {
+		Recipe r = rr.findById(forRecipe).get();
+		List<Contain> ingRecipes = cr.findByRecipe(r);
+		request.getSession().setAttribute("lookRecipe", ingRecipes);
 		request.getSession().setAttribute("ingRecipes", ingRecipes);
 		List<Picture> pictures = pr.searchByRecipe(forRecipe);
 		request.getSession().setAttribute("picRecipes", pictures);
+		if(p == null) {// neregistrovani korisnik moze da vidi samo ime i prezime onog ko je postavio recept
+			request.getSession().setAttribute("userInfo", r.getUser().getName() + " " + r.getUser().getSurname());
+		} else {
+			request.getSession().setAttribute("recipeOwner", r.getUser());
+			IsFriend isf = fr.getMemberStatus(p.getName(), r.getUser().getUsername());
+			String status = "";
+			if(isf != null) {
+				status = isf.getStatus(); 
+				request.getSession().setAttribute("isf", isf);
+			} 
+			request.getSession().setAttribute("friendStatus", status);
+		}
 		return "full_recipe";
 	}
 	

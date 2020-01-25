@@ -174,4 +174,73 @@ public class UserController {
 		request.getSession().setAttribute("fc", fc);
 		return "user_profile";
 	}
+	
+	@RequestMapping(value = "/users/addFriend", method = RequestMethod.POST)
+	public String addUser(Principal p, HttpServletRequest request) {
+		User user1 = ur.findByUsername(p.getName()); //ja
+		User user2 = (User) request.getSession().getAttribute("recipeOwner");
+		IsFriend isf = new IsFriend();
+		isf.setUser1(user1);
+		isf.setUser2(user2);
+		isf.setStatus("pending");
+		fr.save(isf);
+		user1.addIsFriends1(isf);
+		user2.addIsFriends2(isf);
+		ur.saveAndFlush(user1);
+		ur.saveAndFlush(user2);
+		request.getSession().setAttribute("friendStatus", isf.getStatus());
+		return "full_recipe";
+	}
+	
+	@RequestMapping(value = "/users/cancelFriendRequest", method = RequestMethod.POST)
+	public String cancelFriendRequest(Principal p, HttpServletRequest request) {
+		User user1 = ur.findByUsername(p.getName()); //ja
+		User user2 = (User) request.getSession().getAttribute("recipeOwner");
+		IsFriend isf = fr.findEntityForRequestCancel(user1.getUsername(), user2.getUsername());
+		user1.removeIsFriends1(isf);
+		user2.removeIsFriends2(isf);
+		ur.saveAndFlush(user1);
+		ur.saveAndFlush(user2);
+		fr.delete(isf);
+		request.getSession().setAttribute("friendStatus", "");
+		return "full_recipe";
+	}
+	
+	@RequestMapping(value = "/users/deleteFriend", method = RequestMethod.POST)
+	public String deleteFriend(Principal p, Integer id, HttpServletRequest request) {
+		User user1 = ur.findByUsername(p.getName()); //ja
+		User user2 = ur.findById(id).get();
+		IsFriend isf = fr.findEntityForFriendDelete(p.getName(), id);
+		user1.removeIsFriends1(isf);
+		user2.removeIsFriends2(isf);
+		ur.saveAndFlush(user1);
+		ur.saveAndFlush(user2);
+		fr.delete(isf);
+		List<User> friends = fr.getFriends(p.getName());
+		request.getSession().setAttribute("friends", friends);
+		return "social_page";
+	}
+	
+	@RequestMapping(value = "/users/deleteFriendRequest", method = RequestMethod.POST)
+	public String deleteFriendRequest(Principal p, Integer id, HttpServletRequest request) {
+		User user1 = ur.findByUsername(p.getName()); //ja
+		User user2 = ur.findById(id).get();
+		IsFriend isf = fr.findEntityForRequestDelete(user1.getUsername(), id);
+		user1.removeIsFriends1(isf);
+		user2.removeIsFriends2(isf);
+		ur.saveAndFlush(user1);
+		ur.saveAndFlush(user2);
+		fr.delete(isf);
+		List<User> friends = fr.getFriends(p.getName());
+		request.getSession().setAttribute("friends", friends);
+		List<User> friendRequestList = fr.getFriendRequests(p.getName());
+		request.getSession().setAttribute("requests", friendRequestList);
+		int friendRequestNumber = fr.getNumberOfFriendRequest(p.getName());// naravno refresovati notifikaciju za zahteve
+		if(friendRequestNumber == 0) {
+			request.getSession().setAttribute("friendRequest", "");
+		} else{
+			request.getSession().setAttribute("friendRequest", friendRequestNumber);
+		}
+		return "social_page";
+	}
 }

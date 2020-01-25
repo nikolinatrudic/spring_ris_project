@@ -26,4 +26,17 @@ public interface FriendRepository extends JpaRepository<IsFriend, Integer>{
 	
 	@Query("select if.user2 from IsFriend if where if.user1.username=:username and status='pending' ")
 	List<User> getSentRequestsUser(@Param("username") String username);
+	
+	@Query("select if from IsFriend if where (if.user1.username=:user1 and if.user2.username=:user2) or "
+			+ "(if.user1.username=:user2 and if.user2.username=:user1)")
+	IsFriend getMemberStatus(@Param("user1") String user1, @Param("user2") String user2);
+	
+	@Query("select if from IsFriend if where if.user1.username=:user1 and if.user2.username=:user2 and status='pending'")
+	IsFriend findEntityForRequestCancel(@Param("user1") String user1, @Param("user2") String user2);
+	
+	@Query("select if from IsFriend if where ((if.user1.username=:user1 and if.user2.idUser=:user2) or (if.user1.idUser=:user2 and if.user2.username=:user1)) and status='accepted'")
+	IsFriend findEntityForFriendDelete(@Param("user1") String user1, @Param("user2") Integer user2);
+	
+	@Query("select if from IsFriend if where if.user1.idUser=:user2 and if.user2.username=:user1 and status='pending'")
+	IsFriend findEntityForRequestDelete(@Param("user1") String user1, @Param("user2") Integer user2);
 }
