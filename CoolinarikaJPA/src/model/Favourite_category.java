@@ -2,7 +2,8 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
+
+import java.util.Set;
 
 
 /**
@@ -26,8 +27,16 @@ public class Favourite_category implements Serializable {
 	private User user;
 
 	//bi-directional many-to-many association to Recipe
-	@ManyToMany(mappedBy="favouriteCategories")
-	private List<Recipe> recipes;
+	@ManyToMany(mappedBy="favouriteCategories", fetch = FetchType.EAGER)
+	private Set<Recipe> recipes;
+
+	public Set<Recipe> getRecipes() {
+		return recipes;
+	}
+
+	public void setRecipes(Set<Recipe> recipes) {
+		this.recipes = recipes;
+	}
 
 	public Favourite_category() {
 	}
@@ -54,14 +63,6 @@ public class Favourite_category implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	public List<Recipe> getRecipes() {
-		return this.recipes;
-	}
-
-	public void setRecipes(List<Recipe> recipes) {
-		this.recipes = recipes;
 	}
 
 }

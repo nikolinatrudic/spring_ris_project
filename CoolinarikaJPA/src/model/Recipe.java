@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -47,7 +48,7 @@ public class Recipe implements Serializable {
 	private List<Contain> contains;
 
 	//bi-directional many-to-many association to Favourite_category
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(
 		name="exist_in"
 		, joinColumns={
@@ -57,7 +58,15 @@ public class Recipe implements Serializable {
 			@JoinColumn(name="Favourite_category_idFavourite_category")
 			}
 		)
-	private List<Favourite_category> favouriteCategories;
+	private Set<Favourite_category> favouriteCategories;
+
+	public Set<Favourite_category> getFavouriteCategories() {
+		return favouriteCategories;
+	}
+
+	public void setFavouriteCategories(Set<Favourite_category> favouriteCategories) {
+		this.favouriteCategories = favouriteCategories;
+	}
 
 	public Recipe() {
 	}
@@ -106,7 +115,7 @@ public class Recipe implements Serializable {
 
 	public Picture addPicture(Picture picture) {
 		getPictures().add(picture);
-		picture.setRecipe(this);
+		//picture.setRecipe(this);
 
 		return picture;
 	}
@@ -154,14 +163,6 @@ public class Recipe implements Serializable {
 		contain.setRecipe(null);
 
 		return contain;
-	}
-
-	public List<Favourite_category> getFavouriteCategories() {
-		return this.favouriteCategories;
-	}
-
-	public void setFavouriteCategories(List<Favourite_category> favouriteCategories) {
-		this.favouriteCategories = favouriteCategories;
 	}
 
 }
