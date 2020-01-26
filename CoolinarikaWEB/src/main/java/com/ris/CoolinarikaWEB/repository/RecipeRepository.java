@@ -1,5 +1,6 @@
 package com.ris.CoolinarikaWEB.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,4 +25,6 @@ public interface RecipeRepository extends JpaRepository<Recipe, Integer> {
 	
 	@Query("select c.recipe from Contain c where c.ingredient.idIngredient=:idIng")
 	List<Recipe> searchByIngredient(@Param("idIng") Integer idIng);
+	
+	List<Recipe> findByPostDate(Date date);
 }

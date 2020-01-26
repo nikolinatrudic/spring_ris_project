@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CategoryRecipes" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f600485c-5e02-412f-8fb4-e0c0782fe87a">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CategoryRecipes" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="14df27ab-98bb-4472-93eb-750bf4a90b33">
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
 	<field name="name" class="java.lang.String"/>
 	<field name="description" class="java.lang.String"/>
-	<field name="user.username" class="java.lang.String"/>
 	<field name="postDate" class="java.util.Date"/>
-	<group name="category"/>
+	<field name="user.username" class="java.lang.String"/>
+	<group name="category">
+		<groupHeader>
+			<band height="50"/>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="34" splitType="Stretch">
+		<band height="42" splitType="Stretch">
 			<staticText>
-				<reportElement x="170" y="0" width="203" height="30" uuid="d2c9d517-3274-4eea-8622-b70ac2b6ec32"/>
+				<reportElement x="190" y="10" width="190" height="30" uuid="dbc5b386-1305-466d-b10d-cf49e4b4275a"/>
 				<textElement>
 					<font size="24"/>
 				</textElement>
@@ -30,20 +36,26 @@
 	<columnHeader>
 		<band height="61" splitType="Stretch">
 			<staticText>
-				<reportElement x="6" y="0" width="100" height="30" uuid="894ec4a9-ce2e-4fbd-b4c6-9b77f99112df">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2990d654-01f7-497e-88ca-068f427a1f32"/>
+				<reportElement x="4" y="0" width="100" height="30" uuid="f6d25489-4f39-4342-8e7d-3c6d8af8e361">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="540b489d-cf59-4ddd-8a6a-0a0655f3d740"/>
 				</reportElement>
 				<text><![CDATA[name]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="106" y="0" width="100" height="30" uuid="9d0255f0-3a57-4086-bb77-8a082e60ab48">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cb9df7d5-0560-4975-b081-5e54183076bc"/>
+				<reportElement x="112" y="0" width="100" height="30" uuid="9f2005ae-29bf-4a8e-b7bd-1cca4cb035dd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2e970f3b-d345-4be8-a92b-41f699e21ec7"/>
 				</reportElement>
 				<text><![CDATA[description]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="302" y="0" width="100" height="30" uuid="a621d735-a074-4e69-8725-fd0d7b127bf6">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6e57aa5b-c669-47b7-8e18-4d375520d897"/>
+				<reportElement x="216" y="0" width="100" height="30" uuid="51a70191-4862-4dfe-ade0-c0749c305e89">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9c42666b-dc78-4bdf-9530-71590356a7b5"/>
+				</reportElement>
+				<text><![CDATA[postDate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="315" y="0" width="100" height="30" uuid="e79d6036-a3c6-4c56-8e19-33dd601da751">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eb90dfa3-7e63-44ca-bb0a-9654470e1a3b"/>
 				</reportElement>
 				<text><![CDATA[user.username]]></text>
 			</staticText>
@@ -52,20 +64,26 @@
 	<detail>
 		<band height="125" splitType="Stretch">
 			<textField>
-				<reportElement x="6" y="11" width="100" height="30" uuid="e8acbf7c-f443-4611-a081-b6f3b8cd5f5d">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2990d654-01f7-497e-88ca-068f427a1f32"/>
+				<reportElement x="4" y="13" width="100" height="30" uuid="3337d754-4b84-48f0-a5a7-c1cc5b00db18">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="540b489d-cf59-4ddd-8a6a-0a0655f3d740"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="106" y="13" width="100" height="30" uuid="27a1f42a-db60-45b0-a87d-3923ea441ba9">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="cb9df7d5-0560-4975-b081-5e54183076bc"/>
+				<reportElement x="112" y="17" width="100" height="30" uuid="3abc6d8f-c980-4ea2-b2ea-fbba0ae3cfc6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="2e970f3b-d345-4be8-a92b-41f699e21ec7"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{description}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="302" y="8" width="100" height="30" uuid="68475324-af32-43ab-8f08-25a0466d1259">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6e57aa5b-c669-47b7-8e18-4d375520d897"/>
+				<reportElement x="216" y="19" width="100" height="30" uuid="5cb729cf-0821-418d-8cb6-13c7a73ed1ba">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9c42666b-dc78-4bdf-9530-71590356a7b5"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{postDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="315" y="15" width="100" height="30" uuid="ac66b20a-52a8-4adc-90ed-35b011bf618b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="eb90dfa3-7e63-44ca-bb0a-9654470e1a3b"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{user.username}]]></textFieldExpression>
 			</textField>
