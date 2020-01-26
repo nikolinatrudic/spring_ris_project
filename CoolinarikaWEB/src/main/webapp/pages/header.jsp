@@ -23,8 +23,8 @@
 <!-- Your custom styles (optional) -->
 <link href="/Coolinarika/css/style.css" rel="stylesheet">
 <script type="text/javascript">
-	$(function () {
-	  $('[data-toggle="tooltip"]').tooltip()
+	$(function() {
+		$('[data-toggle="tooltip"]').tooltip()
 	})
 </script>
 </head>
@@ -48,22 +48,27 @@
 						UP</a></li>
 			</s:authorize>
 			<s:authorize access="isAuthenticated()">
-				<li class="nav-item active"><a class="nav-link" href="${pageContext.request.contextPath}/users/redirectAddRecipe">ADD
+				<li class="nav-item active"><a class="nav-link"
+					href="${pageContext.request.contextPath}/users/redirectAddRecipe">ADD
 						RECIPE <span class="sr-only">(current)</span>
 				</a></li>
 				<s:authorize access="hasRole('ADMIN')">
 					<li class="nav-item"><a class="nav-link"
 						href="${pageContext.request.contextPath}/pages/new_category.jsp">ADD
 							NEW CATEGORY</a></li>
-				</s:authorize>
-				<li class="nav-item"><a class="nav-link" href="/Coolinarika/searchAll">RECIPES</a></li>
-				<s:authorize access="isAuthenticated()">
-					</s:authorize>
 					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath}/logout">SIGN OUT</a></li>
+						href="${pageContext.request.contextPath}/pages/reports_page.jsp">STATISTICS</a></li>
 				</s:authorize>
+				<li class="nav-item"><a class="nav-link"
+					href="/Coolinarika/searchAll">RECIPES</a></li>
+				<s:authorize access="isAuthenticated()">
+				</s:authorize>
+				<li class="nav-item"><a class="nav-link"
+					href="${pageContext.request.contextPath}/logout">SIGN OUT</a></li>
+			</s:authorize>
 		</ul>
-		<form class="form-inline" action="/Coolinarika/getIngredientsAndCategories">
+		<form class="form-inline"
+			action="/Coolinarika/getIngredientsAndCategories">
 			<div class="md-form my-0">
 				<input class="btn btn-light" type="submit" value="Search">
 			</div>
@@ -73,16 +78,20 @@
 		<!-- 		    </div> -->
 		<s:authorize access="isAuthenticated()">
 			<a href="${pageContext.request.contextPath}/users/getFriendsInfo"
-				class="notification" style="margin-right: 12px; margin-bottom: 2px" data-toggle="tooltip" data-placement="bottom" title="Social page">
+				class="notification" style="margin-right: 12px; margin-bottom: 2px"
+				data-toggle="tooltip" data-placement="bottom" title="Social page">
 				<i class="fas fa-user fa-2x"></i> <span class="badge">${friendRequest }</span>
 			</a>
-			<a href="/Coolinarika/users/getMessages" class="notification" data-toggle="tooltip" data-placement="bottom" title="${messageNumber } messages"> <i
-				class="fas fa-envelope fa-2x" ></i> <span class="badge">${messageNumber }</span>
+			<a href="/Coolinarika/users/getMessages" class="notification"
+				data-toggle="tooltip" data-placement="bottom"
+				title="${messageNumber } messages"> <i
+				class="fas fa-envelope fa-2x"></i> <span class="badge">${messageNumber }</span>
 			</a>
-			<a href="/Coolinarika/users/getProfileInfo">
-			<img src="${userPicture }" alt="avatar"
+			<a href="/Coolinarika/users/getProfileInfo"> <img
+				src="${userPicture }" alt="avatar"
 				style="width: 45px; height: 45px; margin-bottom: 2px; margin-left: 12px"
-				class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1" data-toggle="tooltip" data-placement="bottom" title="My profile">
+				class="avatar rounded-circle d-flex align-self-center mr-2 z-depth-1"
+				data-toggle="tooltip" data-placement="bottom" title="My profile">
 			</a>
 		</s:authorize>
 	</div>
