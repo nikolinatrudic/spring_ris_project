@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import model.Category;
 import model.Recipe;
+import model.User;
 
 public interface RecipeRepository extends JpaRepository<Recipe, Integer> {
 
@@ -16,6 +17,11 @@ public interface RecipeRepository extends JpaRepository<Recipe, Integer> {
 	
 	List<Recipe> findByCategory(Category category);
 	
+	List<Recipe> findByUser(User u);
+	
 	@Query("select r from Recipe r where r.category.idCategory=:cat and r.user.username <> :username")
 	List<Recipe> notMyRecipes(@Param("username") String username, @Param("cat") Integer cat);
+	
+	@Query("select c.recipe from Contain c where c.ingredient.idIngredient=:idIng")
+	List<Recipe> searchByIngredient(@Param("idIng") Integer idIng);
 }

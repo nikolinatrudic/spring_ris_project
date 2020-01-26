@@ -64,7 +64,7 @@
 
 						</div>
 						<div class="col-lg-8 col-md-12 text-center" style="margin-top: -50px">
-							<div class="table-wrapper-scroll-y my-custom-scrollbar">
+							<div class="table-wrapper-scroll-y my-custom-scrollbar" style="width: 800px; height: 1000px">
 
 								<table class="table table-bordered table-striped mb-0" style="background-color: black;">
 									<thead>
@@ -76,12 +76,12 @@
 									<tbody>
 										<tr>
 											<th scope="row"><i class="far fa-folder fa-2x"></i></th>
-											<td><strong style="color: white;">My recipes</strong></td>
+											<td><a href = "/Coolinarika/users/getFavCategoryRecipes?id="><strong style="color: white;">My recipes</strong></a></td>
 										</tr>
 										<c:forEach items="${fc }" var="fc">
 											<tr>
 												<th><i class="far fa-folder fa-2x"></i></th>
-												<td><strong style="color: white;">${fc.name }</strong></td>
+												<td><a href="/Coolinarika/users/getFavCategoryRecipes?id=${fc.idFavourite_category }"><strong style="color: white;">${fc.name }</strong></a></td>
 											</tr>
 										</c:forEach>
 									</tbody>

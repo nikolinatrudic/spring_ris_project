@@ -63,10 +63,9 @@
 						href="${pageContext.request.contextPath}/logout">SIGN OUT</a></li>
 				</s:authorize>
 		</ul>
-		<form class="form-inline">
+		<form class="form-inline" action="/Coolinarika/getIngredientsAndCategories">
 			<div class="md-form my-0">
-				<input class="form-control mr-sm-2" type="text" placeholder="Search"
-					aria-label="Search">
+				<input class="btn btn-light" type="submit" value="Search">
 			</div>
 		</form>
 		<!-- 		    <div class="md-form my-0"> -->

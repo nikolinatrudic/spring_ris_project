@@ -81,6 +81,31 @@ public class RecipeController {
 		return "recipes";
 	}
 	
+	@RequestMapping(value = "getIngredientsAndCategories", method = RequestMethod.GET)
+	public String getIngredientsAndCategories(HttpServletRequest request) {
+		List<Ingredient> ing = ir.findAll();
+		List<Category> cat = ctr.findAll();
+		request.getSession().setAttribute("ingSearch", ing);
+		request.getSession().setAttribute("catSearch", cat);
+		return "search_page";
+	}
+	
+	@RequestMapping(value = "searchByIngredient", method = RequestMethod.GET)
+	public String saerchByIngredient(Integer selIngSearch, HttpServletRequest request) {
+		List<Recipe> recipes = rr.searchByIngredient(selIngSearch);
+		request.getSession().setAttribute("foundRecipesByIng", recipes);
+		request.getSession().setAttribute("ingName", ir.findById(selIngSearch).get().getName());
+		return "search_page";
+	}
+	
+	@RequestMapping(value = "searchByCategory", method = RequestMethod.GET)
+	public String saerchByCategory(Integer selCatSearch, HttpServletRequest request) {
+		List<Recipe> recipes = rr.findByCategory(ctr.findById(selCatSearch).get());
+		request.getSession().setAttribute("foundRecipesByCat", recipes);
+		request.getSession().setAttribute("catName", ctr.findById(selCatSearch).get().getName());
+		return "search_page";
+	}
+	
 	@RequestMapping(value = "getRecipeInfo", method = RequestMethod.GET)
 	public String getRecipeInfo(Principal p, Integer forRecipe, HttpServletRequest request) {
 		Recipe r = rr.findById(forRecipe).get();
@@ -150,17 +175,24 @@ public class RecipeController {
 	@RequestMapping(value = "/users/addToFavouriteCategory", method = RequestMethod.POST)
 	public String addToFavouriteCategory(Principal p, Integer favcat, HttpServletRequest request) {
 		Recipe r = (Recipe) request.getSession().getAttribute("lookRecipe");
-		System.out.println("recept" + r.getName());
 		Favourite_category fc = fcr.findById(favcat).get();
-		System.out.println("omiljena kat " + fc.getName());
 		r.getFavouriteCategories().add(fc);
-		System.out.println("dodao u listu recepata");
 		fc.getRecipes().add(r);
-		System.out.println("dodau u listu omilj kat");
 		rr.saveAndFlush(r);
 		fcr.saveAndFlush(fc);
 		List<Favourite_category> favc = fcr.findByUser(ur.findByUsername(p.getName()));
 		request.getSession().setAttribute("favc", favc);
 		return "full_recipe";
+	}
+	
+	@RequestMapping(value = "/users/getFavCategoryRecipes", method = RequestMethod.GET)//za prosledjeni id omiljenje kategorije trazimo sve recepte
+	public String getFavCategoryRecipes(Principal p, Integer id, HttpServletRequest request) {
+		List<Recipe> recipes = null;
+		if(id == null)
+			recipes = rr.findByUser(ur.findByUsername(p.getName()));
+		else
+			recipes = fcr.getRecipesFromFavCat(id);
+		request.getSession().setAttribute("myRecipes", recipes);
+		return "my_recipes";
 	}
 }
