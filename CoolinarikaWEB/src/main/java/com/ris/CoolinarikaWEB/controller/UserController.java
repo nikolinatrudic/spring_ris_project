@@ -119,7 +119,7 @@ public class UserController {
 		return "social_page";
 	}
 	
-	@RequestMapping(value = "/users/getMessages", method = RequestMethod.GET)
+	@RequestMapping(value = "/users/getMessages", method = RequestMethod.GET) // dobavi sve user-e sa kojima je korisnik cetovao
 	public String getMessages(Principal p, HttpServletRequest request) {
 		List<User> friendsChat = mr.getUserMessage(p.getName());
 		request.getSession().setAttribute("friendsChat", friendsChat);
@@ -141,7 +141,7 @@ public class UserController {
 		return "messages";
 	}
 	
-	public void unseen(Principal p, String us) {
+	private void unseen(Principal p, String us) {
 		List<Message> notSeenMessages = mr.getSeenStatus(p.getName(), us);
 		for(Message m: notSeenMessages) {
 			m.setSeenStatus("y");
@@ -161,6 +161,37 @@ public class UserController {
 		mr.save(m);
 		List<Message> messages = mr.getMessages(p.getName(), u.getUsername());
 		request.getSession().setAttribute("message", messages);
+		return "messages";
+	}
+	
+	@RequestMapping(value = "/users/sendFriendMessage", method = RequestMethod.POST)
+	public String sendFriendMessage(Principal p, Integer id, HttpServletRequest request) {
+		User userTo = ur.findById(id).get();
+		User me = ur.findByUsername(p.getName());
+		List<Message> messages = mr.getMessages(p.getName(), userTo.getUsername());
+		List<User> friendsChat = mr.getUserMessage(p.getName());
+		if(messages.size() == 0) {
+			Message m = new Message();
+			m.setUser1(me);
+			m.setUser2(userTo);
+			m.setContent("Hi");
+			m.setDate(new Date());
+			m.setSeenStatus("n");
+			mr.save(m);
+			messages = mr.getMessages(p.getName(), userTo.getUsername());
+			friendsChat = mr.getUserMessage(p.getName());
+		}
+		request.getSession().setAttribute("friendsChat", friendsChat);
+		request.getSession().setAttribute("user", userTo);
+		request.getSession().setAttribute("message", messages);
+		unseen(p, userTo.getUsername());
+		int messageNumber = mr.getUnseenMessageNumber(p.getName());
+		//request.getSession().removeAttribute("messageNumber");
+		if(messageNumber == 0) {
+			request.getSession().setAttribute("messageNumber", "");
+		} else{
+			request.getSession().setAttribute("messageNumber", messageNumber);
+		}
 		return "messages";
 	}
 	

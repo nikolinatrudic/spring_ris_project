@@ -39,7 +39,7 @@
 											<td>${f.name }</td>
 											<td>${f.surname }</td>
 											<td>@${f.username }</td>
-											<td style="padding: 0; margin: 0"><form action="#" method = "post">
+											<td style="padding: 0; margin: 0"><form action="/Coolinarika/users/sendFriendMessage" method = "post">
 											<input type="hidden" name="id" value="${f.idUser }" />
 											<input type = "submit" value="SEND" class="btn btn-outline-default waves-effect">
 											</form></td>
