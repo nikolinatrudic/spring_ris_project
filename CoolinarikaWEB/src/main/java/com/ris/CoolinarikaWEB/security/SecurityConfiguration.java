@@ -33,7 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		// TODO Auto-generated method stub
 		security.authorizeRequests()
 		.antMatchers("/", "/login", "/signup").permitAll()
-		.antMatchers("/admin/**", "/pages/new_category.jsp")
+		.antMatchers("/admin/**", "/pages/new_category.jsp", "/pages/reports_page.jsp")
 		.hasRole("ADMIN")
 		.antMatchers("/users/**")
 		.hasAnyRole("ADMIN", "USER")
